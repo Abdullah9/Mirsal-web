@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use App\User;
 
 class LoginController extends Controller
 {
@@ -20,8 +20,11 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
-
+     */
+    protected function guard()
+    {
+        return Auth::guard('web');
+    }
     use AuthenticatesUsers;
 
     /**
@@ -51,17 +54,17 @@ class LoginController extends Controller
 
         $credentials = $request->only('phone', 'password');
 
-        if (\Auth::attempt($credentials)) {
-            $user = \Auth::user();
-            if($user->role == "ADMIN")
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->role == "ADMIN") {
                 return redirect()->route('admins.service-provider-report.index');
-                else{
-                    \Auth::logout();
-                    return back()->withErrors(['credentials' => 'Credentials do not match']);
-                }
+            } else {
+                Auth::logout();
+                return back()->withErrors(['credentials' => 'Credentials do not match']);
+            }
         } else {
             return back()->withErrors(['credentials' => 'Credentials do not match']);
         }
-        
+
     }
 }
