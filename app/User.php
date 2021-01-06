@@ -11,7 +11,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use SoftDeletes, Notifiable;
-
+    protected $guard = 'web';
     protected $fillable = [
         'name',
         'email',

@@ -5,8 +5,9 @@ namespace App\GraphQL\Mutations;
 use App\Exceptions\GraphqlException;
 use App\Model\UserToken;
 use App\User;
+use Auth;
+// use JWTAuth;
 use GraphQL\Type\Definition\ResolveInfo;
-use JWTAuth;
 use Kreait\Firebase\Factory;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
@@ -21,6 +22,11 @@ class LoginMutator
      * @param  \GraphQL\Type\Definition\ResolveInfo  $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
      * @return mixed
      */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api', ['except' => ['login']]);
+    // }
+
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $userData = array(
@@ -28,7 +34,7 @@ class LoginMutator
             'password' => $args['password'],
         );
 
-        $logged = JWTAuth::attempt($userData);
+        $logged = Auth::guard('api')->attempt($userData);
 
         $user = User::where('phone', $args['phone'])->first();
 

@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:60,1',
+            'useapiguard',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
         'locale' => \App\Http\Middleware\Localization::class,
+        'useapiguard' => \App\Http\Middleware\UseApiGuard::class,
     ];
 }

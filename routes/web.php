@@ -22,7 +22,7 @@ Route::resource('hyper-payment', 'HyperPayPaymentController');
 Route::get('pay-invoice', 'HyperPayPaymentController@payInvoice')->name('products.pa-invoice');
 Route::get('return-url', 'HyperPayPaymentController@returnUrl')->name('products.return-url');
 
-Route::middleware(['auth', 'locale'])->group(function () {
+Route::middleware(['auth:web', 'locale'])->group(function () {
 
     Route::namespace ('Dashboard\Admin')->prefix('admins')->name('admins.')->group(function () {
         Route::resource('vet-requests', 'VetRequestController');

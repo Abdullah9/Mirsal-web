@@ -21,10 +21,7 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
      */
-    protected function guard()
-    {
-        return Auth::guard('web');
-    }
+
     use AuthenticatesUsers;
 
     /**
@@ -39,9 +36,15 @@ class LoginController extends Controller
      *
      * @return void
      */
+    protected function guard()
+    {
+        return Auth::guard('web');
+    }
     public function __construct()
     {
+
         $this->middleware('guest')->except('logout');
+
         // $this->user = new User;
     }
 
@@ -53,9 +56,11 @@ class LoginController extends Controller
         ]);
 
         $credentials = $request->only('phone', 'password');
+        // print_r(Auth::guard('web')->attempt($credentials));
+        if (Auth::guard('web')->attempt($credentials)) {
+            $user = Auth::guard('web')->user();
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+            print_r($user);
             if ($user->role == "ADMIN") {
                 return redirect()->route('admins.service-provider-report.index');
             } else {

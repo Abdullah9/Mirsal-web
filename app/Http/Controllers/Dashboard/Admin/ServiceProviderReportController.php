@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\User;
+use Illuminate\Http\Request;
 
 class ServiceProviderReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:web');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +20,8 @@ class ServiceProviderReportController extends Controller
     public function index()
     {
         //Get ALL Service Provider
-        $service_providers = User::whereIn('role',['VETERINARIAN', 'DRIVER']);
-        
+        $service_providers = User::whereIn('role', ['VETERINARIAN', 'DRIVER']);
+
         $data['service_providers'] = $service_providers->get();
 
         return view('pages.admin.reports.service-providers')->with(compact('data'));
@@ -54,7 +57,7 @@ class ServiceProviderReportController extends Controller
     public function show($id)
     {
         $service_provider = User::find($id);
-        
+
         $data['service_provider'] = $service_provider;
 
         return view('pages.admin.reports.service-provider')->with(compact('data'));

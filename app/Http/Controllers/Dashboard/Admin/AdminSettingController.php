@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Model\AdminSetting;
 use App\User;
+use Illuminate\Http\Request;
 
 class AdminSettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:web');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +21,7 @@ class AdminSettingController extends Controller
     public function index()
     {
         $admin_setting = AdminSetting::first();
-        
+
         return view('pages.admin.admin-settings.index')->with(compact('admin_setting'));
     }
 
@@ -82,7 +86,7 @@ class AdminSettingController extends Controller
         $company->save();
 
         return redirect()->route('admins.admin-settings.index');
-    }  
+    }
 
     /**
      * Remove the specified resource from storage.
