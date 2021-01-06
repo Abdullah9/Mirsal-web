@@ -5,9 +5,8 @@ namespace App\GraphQL\Mutations;
 use App\Exceptions\GraphqlException;
 use App\Model\UserToken;
 use App\User;
-use Auth;
-// use JWTAuth;
 use GraphQL\Type\Definition\ResolveInfo;
+use JWTAuth;
 use Kreait\Firebase\Factory;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
@@ -34,7 +33,7 @@ class LoginMutator
             'password' => $args['password'],
         );
 
-        $logged = Auth::guard('api')->attempt($userData);
+        $logged = JWTAuth::attempt($userData);
 
         $user = User::where('phone', $args['phone'])->first();
 

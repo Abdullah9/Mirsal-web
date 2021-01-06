@@ -32,7 +32,7 @@ type Mutation {
     otpVerify(phone: String!, otp_code: String!): OtpVerifyResponse!
         @field(resolver: "OTPVerification@otpVerify")
 }
-extend type Mutation @middleware(checks: ["useapiguard"]) {
+extend type Mutation @middleware(checks: ["auth:api"]) {
     login(input: LoginInput @spread): UserResponse!
         @field(resolver: "LoginMutator")
 }
@@ -159,7 +159,7 @@ type Query {
     ): [Product!]! @paginate(model: "App\\Model\\Product")
 }
 
-extend type Query @guard(checks: ["useapiguard"]) {
+extend type Query @guard(checks: ["auth:api"]) {
     me: User @auth
 
     getUsers(
