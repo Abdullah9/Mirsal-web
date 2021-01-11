@@ -95,26 +95,25 @@
                                                 <tr>
                                                 <tr>
                                                     <td>
-                                                        <form id="update_invoice{{ $invoice->id}}"
-                                                            action="{{ route('admin.client-offers.update', $invoice->id) }}"
-                                                            method="POST">
-                                                            {{ csrf_field() }}
-                                                            @if($invoice->payment_status == PAID)
-                                                            <button class="btn btn-warning  m-1"
-                                                                onclick="paidStatus('{{ $invoice->id }}')">{{ __('lang.paid') }}</button>
-                                                            @endIf
-                                                            @if($invoice->payment_status == PENDING)
+                                                        {{-- <form id="update_invoice{{ $invoice->id}}"
+                                                        action="{{ route('admin.client-offers.update', $invoice->id) }}"
+                                                        method="POST">
+                                                        {{ csrf_field() }} --}}
+                                                        @if($invoice->payment_status == PAID)
+                                                        <button class="btn btn-warning  m-1"
+                                                            onclick="paidStatus('{{ $invoice->id }}')">{{ __('lang.paid') }}</button>
+                                                        @endIf
+                                                        @if($invoice->payment_status == PENDING)
 
-                                                            <button class="btn btn-danger  m-1"
-                                                                onclick="pendingStatus('{{ $invoice->id }}')">{{ __('lang.pending') }}</button>
-                                                            @endIf
+                                                        <button class="btn btn-danger  m-1"
+                                                            onclick="pendingStatus('{{ $invoice->id }}')">{{ __('lang.pending') }}</button>
+                                                        @endIf
 
-                                                            <input type="hidden" name="payment_status"
-                                                                id="invoice_{{ $invoice->id}}" class="expert_id"
-                                                                value="">
+                                                        <input type="hidden" name="payment_status"
+                                                            id="invoice_{{ $invoice->id}}" class="expert_id" value="">
 
 
-                                                        </form>
+                                                        {{-- </form> --}}
                                                     </td>
 
                                                     <td>{{ $invoice->id }}</td>
@@ -142,24 +141,20 @@
 @endsection
 
 @section('script')
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     function paidStatus(id){
 
-      var rate = $("#invoice_"+id).val();
-      console.log(id)
-      console.log(rate)
+
       $('#invoice_'+id).attr('value', 'PENDING');
       $('form#update_invoice'+id).submit();
 
     }
     function pendingStatus(id){
 
-        var rate = $("#invoice_"+id).val();
-      console.log(id)
-      console.log(rate)
+
       $('#invoice_'+id).attr('value', 'PAID');
       $('form#update_invoice'+id).submit();
 
 }
-</script> --}}
+</script>
 @endsection
