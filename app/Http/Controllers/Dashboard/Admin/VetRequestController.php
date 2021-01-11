@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Model\VetRequest;
 use App\Model\Animal;
 use App\Model\Size;
 use App\Model\TimeSlot;
+use App\Model\VetRequest;
+use Illuminate\Http\Request;
 
 class VetRequestController extends Controller
 {
@@ -56,7 +56,6 @@ class VetRequestController extends Controller
         $vetRequest = VetRequest::find($id);
         $data = array();
 
-        
         $sizes = Size::all();
         $animals = Animal::all();
         $timeslots = TimeSlot::all();
@@ -94,7 +93,7 @@ class VetRequestController extends Controller
         $vetRequest->size_id = $request->size_id;
         $vetRequest->status = $request->status;
         $vetRequest->description = $request->description;
-        if($vetRequest->address !== NULL){
+        if ($vetRequest->address !== null) {
             $vetRequest->address->house_number = $request->house_number;
             $vetRequest->address->street = $request->street;
             $vetRequest->address->city = $request->city;
@@ -105,7 +104,7 @@ class VetRequestController extends Controller
         }
         $vetRequest->save();
 
-        return redirect()->route('admins.vet-requests.show',  $id );
+        return redirect()->route('admins.vet-requests.show', $id);
     }
 
     /**
@@ -116,6 +115,9 @@ class VetRequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vetRequest = VetRequest::find($id);
+        $vetRequest->delete();
+
+        return redirect()->route('admins.vet-requests.index');
     }
 }

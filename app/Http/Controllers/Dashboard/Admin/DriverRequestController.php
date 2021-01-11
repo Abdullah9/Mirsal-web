@@ -109,6 +109,9 @@ class DriverRequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $driverOffer = DriverOffer::find($id);
+        $driverOffer->delete();
+
+        return redirect()->route('admins.driver-requests.index');
     }
 }

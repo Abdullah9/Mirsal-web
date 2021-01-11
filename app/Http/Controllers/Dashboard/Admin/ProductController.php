@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Model\Product;
 use App\Model\Animal;
+use App\Model\Duration;
+use App\Model\Product;
 use App\Model\Size;
 use App\Model\TimeSlot;
-use App\Model\Duration;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -99,7 +99,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('admins.products.show',  $id );
+        return redirect()->route('admins.products.show', $id);
     }
 
     /**
@@ -110,7 +110,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+
+        return redirect()->route('admins.products.index');
     }
 
     public function accept($id)
@@ -119,6 +122,6 @@ class ProductController extends Controller
         $product->vip_status = "ACCEPTED";
         $product->save();
 
-        return redirect()->route('admins.products.show',  $id );
+        return redirect()->route('admins.products.show', $id);
     }
 }

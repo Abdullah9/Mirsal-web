@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Model\ClientOffer;
+use Illuminate\Http\Request;
 
 class ClientOfferController extends Controller
 {
@@ -91,8 +91,10 @@ class ClientOfferController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $clientOffer = ClientOffer::find($id);
+        $clientOffer->delete();
 
+        return redirect()->route('admins.client-offers.index');
+    }
 
 }
