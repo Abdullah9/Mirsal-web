@@ -2,11 +2,10 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Events\DriverRequestSaving;
 use App\Helpers\DateArFomatter;
-
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DriverRequest extends Model
 {
@@ -27,12 +26,11 @@ class DriverRequest extends Model
         'image_id',
         'image_uri',
         'status',
-    ]; 
-
-    protected $dispatchesEvents = [
-        'saving' => DriverRequestSaving::class, 
     ];
 
+    protected $dispatchesEvents = [
+        'saving' => DriverRequestSaving::class,
+    ];
 
     public function client()
     {
@@ -41,7 +39,7 @@ class DriverRequest extends Model
 
     public function animal()
     {
-        return $this->belongsTo('App\Model\Animal');
+        return $this->belongsTo('App\Model\Animal')->withTrashed();
     }
 
     public function size()
@@ -56,17 +54,17 @@ class DriverRequest extends Model
 
     public function acceptedDriverOffer()
     {
-        return $this->belongsTo('App\Model\DriverOffer','accepted_driver_offer_id');
+        return $this->belongsTo('App\Model\DriverOffer', 'accepted_driver_offer_id');
     }
 
     public function addressFrom()
     {
-        return $this->belongsTo('App\Model\Address','address_from_id','id');
+        return $this->belongsTo('App\Model\Address', 'address_from_id', 'id');
     }
 
     public function addressTo()
     {
-        return $this->belongsTo('App\Model\Address','address_to_id' ,'id');
+        return $this->belongsTo('App\Model\Address', 'address_to_id', 'id');
     }
 
     public function image()
@@ -78,7 +76,7 @@ class DriverRequest extends Model
     // PENDING - قيد الانتظار
     // SKIPPED - تم تجاهلها
     // ACCEPTED -تم قبولها
-    // COMPLETED - مكتملة 
+    // COMPLETED - مكتملة
 
     public function getStatusArAttribute()
     {
@@ -86,14 +84,16 @@ class DriverRequest extends Model
     }
 
     public function getFullPriceAttribute()
-    {   
-        if($this->acceptedDriverOffer()->exists())
+    {
+        if ($this->acceptedDriverOffer()->exists()) {
             return $this->acceptedDriverOffer->price;
+        }
+
         return null;
     }
 
     public function statusTranslate($status)
-    {   
+    {
         $value = "";
         switch ($status) {
             case 'CANCELLED':
@@ -124,7 +124,7 @@ class DriverRequest extends Model
     // SHARE تشاركي
     // PRIVATE - خاص
     public function typeTranslate($type)
-    {   
+    {
         $value = "";
         switch ($type) {
             case 'SHARE':
