@@ -2,11 +2,11 @@
 
 namespace App\Model;
 
+use App\Events\DriverOfferCreated;
+use App\Events\DriverOfferSaving;
+use App\Model\AdminSetting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Events\DriverOfferSaving;
-use App\Events\DriverOfferCreated;
-use App\Model\AdminSetting;
 
 class DriverOffer extends Model
 {
@@ -23,21 +23,21 @@ class DriverOffer extends Model
         'total',
         'rating_id',
 
-    ]; 
+    ];
 
     protected $dispatchesEvents = [
-        'saving' => DriverOfferSaving::class, 
-        'created' => DriverOfferCreated::class, 
+        'saving' => DriverOfferSaving::class,
+        'created' => DriverOfferCreated::class,
     ];
 
     public function driver()
     {
-        return $this->belongsTo('App\User','driver_id','id')->withTrashed();;
+        return $this->belongsTo('App\User', 'driver_id', 'id')->withTrashed();
     }
-    
+
     public function driverRequest()
     {
-        return $this->belongsTo('App\Model\DriverRequest');
+        return $this->belongsTo('App\Model\DriverRequest')->withTrashed();
     }
 
     public function invoice()
@@ -47,7 +47,7 @@ class DriverOffer extends Model
 
     public function rating()
     {
-        return $this->belongsTo('App\Model\Rating','rating_id');
+        return $this->belongsTo('App\Model\Rating', 'rating_id');
     }
 
     public function getPriceAttribute($value)
@@ -66,7 +66,7 @@ class DriverOffer extends Model
     }
 
     public function statusTranslate($status)
-    {   
+    {
         $value = "";
         switch ($status) {
             case 'CANCELLED':

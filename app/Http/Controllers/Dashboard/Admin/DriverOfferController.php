@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Model\DriverOffer;
+use Illuminate\Http\Request;
 
 class DriverOfferController extends Controller
 {
@@ -15,7 +15,7 @@ class DriverOfferController extends Controller
      */
     public function index()
     {
-        $driverOffers = DriverOffer::all();
+        $driverOffers = DriverOffer::with('driver')->with('driverRequest')->get();
         $data['driverOffers'] = $driverOffers;
 
         return view('pages.admin.driver-offers.index')->with(compact('data'));
