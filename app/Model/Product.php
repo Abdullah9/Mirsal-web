@@ -28,11 +28,11 @@ class Product extends Model
         'image_id',
         'image_uri',
         'quantity',
-    ];  
+    ];
 
     public function seller()
     {
-        return $this->belongsTo('App\User','seller_id');
+        return $this->belongsTo('App\User', 'seller_id')->withTrashed();
     }
 
     public function address()
@@ -71,7 +71,7 @@ class Product extends Model
     }
 
     // CANCELLED - ملغية
-    // PENDING - قيد الانتظار 
+    // PENDING - قيد الانتظار
     // SOLD - تم البيع
     public function getStatusArAttribute()
     {
@@ -79,7 +79,7 @@ class Product extends Model
     }
 
     public function statusTranslate($status)
-    {   
+    {
 
         $value = "";
         switch ($status) {
@@ -103,7 +103,7 @@ class Product extends Model
     }
 
     public function typeTranslate($type)
-    {   
+    {
         $value = "";
         switch ($type) {
             case 'ANIMAL':
