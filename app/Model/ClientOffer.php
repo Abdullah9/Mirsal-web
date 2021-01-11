@@ -2,10 +2,10 @@
 
 namespace App\Model;
 
+use App\Events\ClientOfferCreated;
+use App\Events\ClientOfferSaving;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Events\ClientOfferSaving;
-use App\Events\ClientOfferCreated;
 
 class ClientOffer extends Model
 {
@@ -18,21 +18,21 @@ class ClientOffer extends Model
         'status',
         'payment_status',
         'note',
-    ]; 
+    ];
 
     protected $dispatchesEvents = [
-        'saving' => ClientOfferSaving::class, 
-        'created' => ClientOfferCreated::class, 
+        'saving' => ClientOfferSaving::class,
+        'created' => ClientOfferCreated::class,
     ];
 
     public function buyer()
     {
-        return $this->belongsTo('App\User','buyer_id')->withTrashed();
+        return $this->belongsTo('App\User', 'buyer_id')->withTrashed();
     }
 
     public function product()
     {
-        return $this->belongsTo('App\Model\Product');
+        return $this->belongsTo('App\Model\Product')->withTrashed();
     }
 
     public function getOfferedPriceAttribute($value)
@@ -46,7 +46,7 @@ class ClientOffer extends Model
     }
 
     public function statusTranslate($status)
-    {   
+    {
         $value = "";
         switch ($status) {
             case 'CANCELLED':
@@ -68,6 +68,5 @@ class ClientOffer extends Model
 
         return $value;
     }
-
 
 }
