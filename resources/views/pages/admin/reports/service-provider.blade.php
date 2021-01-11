@@ -85,8 +85,8 @@
                                                     <th scope="col">{{ __('lang.status') }}</th>
                                                     <th scope="col">{{ __('lang.provider_profit') }}</th>
                                                     <th scope="col">{{ __('lang.app_commission') }}</th>
-                                                    {{-- <th scope="col">{{ __('lang.edit') }} {{ __('lang.status') }}
-                                                    </th> --}}
+                                                    <th scope="col">{{ __('lang.edit') }} {{ __('lang.status') }}
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -94,10 +94,21 @@
                                                 $invoice)
                                                 <tr>
                                                 <tr>
+
+
+                                                    <td>{{ $invoice->id }}</td>
+                                                    <td>{{ $invoice->provider_profit}}</td>
+                                                    <td>{{ $invoice->admin_commission}}</td>
+                                                    <td>{{ $invoice->payment_status}}</td>
+                                                    </td>
                                                     <td>
                                                         <form id="update_invoice{{ $invoice->id}}"
-                                                            action="{{ route('admin.client-offers.update', $invoice->id) }}"
+                                                            action="{{ route('admins.service-provider-report.update', $invoice->id) }}"
                                                             method="POST">
+                                                            <input type="hidden" name="payment_status"
+                                                                id="invoice_{{ $invoice->id}}" class="expert_id"
+                                                                value="">
+                                                            @method('PUT')
                                                             {{ csrf_field() }}
                                                             @if($invoice->payment_status == "PAID")
                                                             <button class="btn btn-warning  m-1"
@@ -109,19 +120,9 @@
                                                                 onclick="pendingStatus('{{ $invoice->id }}')">{{ __('lang.pending') }}</button>
                                                             @endIf
 
-                                                            <input type="hidden" name="payment_status"
-                                                                id="invoice_{{ $invoice->id}}" class="expert_id"
-                                                                value="">
-
 
 
                                                         </form>
-                                                    </td>
-
-                                                    <td>{{ $invoice->id }}</td>
-                                                    <td>{{ $invoice->provider_profit}}</td>
-                                                    <td>{{ $invoice->admin_commission}}</td>
-                                                    <td>{{ $invoice->payment_status}}</td>
                                                     </td>
                                                 </tr>
                                                 @endforeach
