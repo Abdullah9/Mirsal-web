@@ -182,7 +182,7 @@ class HyperPayPaymentController extends Controller
         $amount = $invoice->amount_paid;
         $data['amount_paid'] = str_replace(',', "", $invoice->amount_paid);
         // var_dump($data); exit;
-        return view('pages.pay-invoice')->with(compact('data'));
+        return view('pages.pay-invoice-mada')->with(compact('data'));
 
     }
 
