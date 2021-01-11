@@ -22,6 +22,9 @@ Route::resource('hyper-payment', 'HyperPayPaymentController');
 Route::get('pay-invoice', 'HyperPayPaymentController@payInvoice')->name('products.pa-invoice');
 Route::get('return-url', 'HyperPayPaymentController@returnUrl')->name('products.return-url');
 
+Route::get('pay-invoice-mada', 'HyperPayPaymentController@payInvoiceMada')->name('products.pa-invoice-mada');
+Route::get('return-url-mada', 'HyperPayPaymentController@returnUrl')->name('products.return-url-mada');
+
 Route::middleware(['auth:web', 'locale'])->group(function () {
 
     Route::namespace ('Dashboard\Admin')->prefix('admins')->name('admins.')->group(function () {

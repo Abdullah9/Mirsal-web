@@ -4,8 +4,8 @@
 
 @section('content')
 <form
-    action="{{URL::to('/')}}/return-url?payment_reference={{$data['response']['id']}}&inv_id={{urlencode($data['inv_id'])}}"
-    class="paymentWidgets" data-brands="VISA MASTER"></form>
+    action="{{URL::to('/')}}/return-url-mada?payment_reference={{$data['response']['id']}}&inv_id={{urlencode($data['inv_id'])}}"
+    class="paymentWidgets" data-brands="MADA"></form>
 @endsection
 
 @push('head')

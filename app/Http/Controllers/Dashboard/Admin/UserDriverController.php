@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\User;
-use App\Http\Requests\UserRequest;
 
 class UserDriverController extends Controller
 {
     /**
-     * 
+     *
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -40,31 +40,31 @@ class UserDriverController extends Controller
         $driver->role = "DRIVER";
 
         $rules = array();
-        if($driver->email != $request->email){
+        if ($driver->email != $request->email) {
             $driver->email = $request->email;
-            $rules['email'] = 'unique:users|max:255';
+            $rules['email'] = 'unique:users|max:255|email';
         }
 
-        if($driver->phone != $request->phone){
+        if ($driver->phone != $request->phone) {
             $driver->phone = $request->phone;
             $rules['phone'] = 'unique:users|max:10';
         }
-        
+
         $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
 
-
-        if(!empty($request->password))
+        if (!empty($request->password)) {
             $driver->password = bcrypt($request->password);
+        }
 
         $driver->name = $request->name;
 
-        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
+        $validatedData = Validator::make($request->all(), $rules, [], [])->validate();
 
         $driver->save();
-        
-        if(isset($request->avatar)){
-            $avatarName = $driver->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
-            $request->avatar->storeAs('user_avatars',$avatarName);
+
+        if (isset($request->avatar)) {
+            $avatarName = $driver->id . '_userAvatar' . time() . '.' . request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars', $avatarName);
             $driver->avatar = $avatarName;
             $driver->save();
         }
@@ -107,28 +107,29 @@ class UserDriverController extends Controller
     {
         $driver = User::find($id);
 
-        if($request->filled("email")){
+        if ($request->filled("email")) {
             $driver->email = $request->email;
         }
 
-        if($request->filled("phone")){
+        if ($request->filled("phone")) {
             $driver->phone = $request->phone;
         }
 
-        if(!empty($request->password))
+        if (!empty($request->password)) {
             $driver->password = bcrypt($request->password);
+        }
 
         $driver->name = $request->name;
 
-        if(isset($request->avatar)){
-            $avatarName = $driver->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
-            $request->avatar->storeAs('user_avatars',$avatarName);
+        if (isset($request->avatar)) {
+            $avatarName = $driver->id . '_userAvatar' . time() . '.' . request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars', $avatarName);
             $driver->avatar = $avatarName;
         }
 
         $driver->save();
 
-        return redirect()->route('admins.drivers.show',  $id );
+        return redirect()->route('admins.drivers.show', $id);
     }
 
     /**
