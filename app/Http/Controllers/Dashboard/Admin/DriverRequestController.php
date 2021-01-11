@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Model\DriverRequest;
-
 use App\Model\Animal;
+use App\Model\DriverRequest;
 use App\Model\Size;
 use App\Model\TimeSlot;
+use Illuminate\Http\Request;
 
 class DriverRequestController extends Controller
 {
@@ -19,7 +18,7 @@ class DriverRequestController extends Controller
      */
     public function index()
     {
-        $driverRequests = DriverRequest::all();
+        $driverRequests = DriverRequest::with('animal')->get();
         $data['driverRequests'] = $driverRequests;
 
         return view('pages.admin.driver-requests.index')->with(compact('data'));
@@ -58,8 +57,6 @@ class DriverRequestController extends Controller
         $data = array();
         $driverRequest = $driverRequest;
 
-
-        
         $sizes = Size::all();
         $animals = Animal::all();
         $timeslots = TimeSlot::all();
@@ -101,7 +98,7 @@ class DriverRequestController extends Controller
 
         $driverRequest->save();
 
-        return redirect()->route('admins.driver-requests.show',  $id );
+        return redirect()->route('admins.driver-requests.show', $id);
     }
 
     /**
