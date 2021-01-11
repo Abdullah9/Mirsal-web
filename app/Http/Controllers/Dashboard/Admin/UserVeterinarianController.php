@@ -126,6 +126,7 @@ class UserVeterinarianController extends Controller
         if (!empty($request->password)) {
             $vet->password = bcrypt($request->password);
         }
+        $validatedData = Validator::make($request->all(), $rules, [], [])->validate();
 
         $vet->name = $request->name;
 

@@ -102,3 +102,19 @@
         </div>
     </div>
 </div>
+@section('script')
+<script type="text/javascript">
+    $( document ).ready(function() {
+            var err = "<?php echo  $errors->any(); ?>";
+            if (err > 0) {
+
+
+    $('#create-driver').modal({
+    show: true
+        });
+}
+
+});
+
+</script>
+@endsection

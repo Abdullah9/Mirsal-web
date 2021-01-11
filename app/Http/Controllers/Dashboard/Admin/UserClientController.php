@@ -122,6 +122,7 @@ class UserClientController extends Controller
             $request->avatar->storeAs('user_avatars', $avatarName);
             $client->avatar = $avatarName;
         }
+        $validatedData = Validator::make($request->all(), $rules, [], [])->validate();
 
         $client->save();
 

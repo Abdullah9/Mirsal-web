@@ -128,6 +128,7 @@ class UserDriverController extends Controller
             $request->avatar->storeAs('user_avatars', $avatarName);
             $driver->avatar = $avatarName;
         }
+        $validatedData = Validator::make($request->all(), $rules, [], [])->validate();
 
         $driver->save();
 
