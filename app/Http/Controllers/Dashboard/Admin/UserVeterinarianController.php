@@ -19,8 +19,8 @@ class UserVeterinarianController extends Controller
     public function index()
     {
 
-        $data['accepted_veterinarians'] = User::where("role", "VETERINARIAN")->where("vet_status", "ACCEPTED")->get();
-        $data['pending_veterinarians'] = User::where("role", "VETERINARIAN")->where("vet_status", "PENDING")->get();
+        $data['accepted_veterinarians'] = User::where("role", "VETERINARIAN")->where("vet_status", "ACCEPTED")->orderBy('id', 'desc')->get();
+        $data['pending_veterinarians'] = User::where("role", "VETERINARIAN")->where("vet_status", "PENDING")->orderBy('id', 'desc')->get();
 
         return view('pages.admin.veterinarians.index')->with(compact('data'));
     }
@@ -115,10 +115,12 @@ class UserVeterinarianController extends Controller
 
         if ($request->filled("email")) {
             $vet->email = $request->email;
+            $rules['email'] = 'email';
         }
 
         if ($request->filled("phone")) {
             $vet->phone = $request->phone;
+            $rules['phone'] = 'max:10';
         }
 
         if (!empty($request->password)) {

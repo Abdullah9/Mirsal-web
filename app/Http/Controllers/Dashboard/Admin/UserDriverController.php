@@ -18,7 +18,7 @@ class UserDriverController extends Controller
      */
     public function index()
     {
-        $drivers = User::where("role", "DRIVER")->get();
+        $drivers = User::where("role", "DRIVER")->orderBy('id', 'desc')->get();
         $data['drivers'] = $drivers;
 
         return view('pages.admin.drivers.index')->with(compact('data'));
@@ -109,10 +109,12 @@ class UserDriverController extends Controller
 
         if ($request->filled("email")) {
             $driver->email = $request->email;
+            $rules['email'] = 'email';
         }
 
         if ($request->filled("phone")) {
             $driver->phone = $request->phone;
+            $rules['phone'] = 'max:10';
         }
 
         if (!empty($request->password)) {

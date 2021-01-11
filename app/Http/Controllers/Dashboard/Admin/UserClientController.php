@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\User;
 
 class UserClientController extends Controller
 {
@@ -17,7 +17,7 @@ class UserClientController extends Controller
      */
     public function index()
     {
-        $clients = User::whereIn("role", ["CLIENT"])->get();
+        $clients = User::whereIn("role", ["CLIENT"])->orderBy('id', 'desc')->get();
         $data['clients'] = $clients;
 
         return view('pages.admin.clients.index')->with(compact('data'));
@@ -34,31 +34,31 @@ class UserClientController extends Controller
         $client->role = "CLIENT";
 
         $rules = array();
-        if($client->email != $request->email){
+        if ($client->email != $request->email) {
             $client->email = $request->email;
-            $rules['email'] = 'unique:users|max:255';
+            $rules['email'] = 'unique:users|max:255|email';
         }
 
-        if($client->phone != $request->phone){
+        if ($client->phone != $request->phone) {
             $client->phone = $request->phone;
             $rules['phone'] = 'unique:users|max:10';
         }
-        
+
         $rules['avatar'] = 'nullable|mimes:jpeg,png,jpg,gif,svg';
 
-
-        if(!empty($request->password))
+        if (!empty($request->password)) {
             $client->password = bcrypt($request->password);
+        }
 
         $client->name = $request->name;
 
-        $validatedData = Validator::make($request->all(), $rules, [] ,[])->validate();
+        $validatedData = Validator::make($request->all(), $rules, [], [])->validate();
 
         $client->save();
-        
-        if(isset($request->avatar)){
-            $avatarName = $client->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
-            $request->avatar->storeAs('user_avatars',$avatarName);
+
+        if (isset($request->avatar)) {
+            $avatarName = $client->id . '_userAvatar' . time() . '.' . request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars', $avatarName);
             $client->avatar = $avatarName;
             $client->save();
         }
@@ -73,7 +73,7 @@ class UserClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
+    {
         $client = User::find($id);
         $data['client'] = $client;
         return view('pages.admin.clients.show')->with(compact('data'));
@@ -101,28 +101,31 @@ class UserClientController extends Controller
     {
         $client = User::find($id);
 
-        if($request->filled("email")){
+        if ($request->filled("email")) {
             $client->email = $request->email;
+            $rules['email'] = 'email';
         }
 
-        if($request->filled("phone")){
+        if ($request->filled("phone")) {
             $client->phone = $request->phone;
+            $rules['phone'] = 'max:10';
         }
 
-        if(!empty($request->password))
+        if (!empty($request->password)) {
             $client->password = bcrypt($request->password);
+        }
 
         $client->name = $request->name;
 
-        if(isset($request->avatar)){
-            $avatarName = $client->id.'_userAvatar'.time().'.'.request()->avatar->getClientOriginalExtension();
-            $request->avatar->storeAs('user_avatars',$avatarName);
+        if (isset($request->avatar)) {
+            $avatarName = $client->id . '_userAvatar' . time() . '.' . request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('user_avatars', $avatarName);
             $client->avatar = $avatarName;
         }
 
         $client->save();
 
-        return redirect()->route('admins.clients.show',  $id );
+        return redirect()->route('admins.clients.show', $id);
     }
 
     /**
