@@ -27,8 +27,9 @@
                                 <tr>
                                     <td>{{ $driverRequest->id}}</td>
                                     <td>{{ $driverRequest->type}}</td>
-                                    <td>{{ App::getLocale() === "ar" ? $driverRequest->animal->name_ar : $driverRequest->animal->name }}
-                                    </td>
+                                    {{-- <td>{{ App::getLocale() === "ar" ? $driverRequest->animal->name_ar : $driverRequest->animal->name }}
+                                    </td> --}}
+                                    <td>{{ $driverRequest->animal->name_ar}}</td>
 
                                     <td>{{ $driverRequest->description}}</td>
                                     <td>
