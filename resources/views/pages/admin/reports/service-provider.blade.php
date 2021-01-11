@@ -142,7 +142,7 @@
 @endsection
 
 @section('script')
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     function paidStatus(id){
 
 
@@ -157,5 +157,5 @@
       $('form#update_invoice'+id).submit();
 
 }
-</script>
+</script> --}}
 @endsection
