@@ -83,7 +83,13 @@ class ServiceProviderReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $invoice = Invoice::find($id);
+
+        $invoice->payment_status = $request->payment_status;
+
+        $invoice->save();
+        return back();
     }
 
     /**

@@ -31,8 +31,8 @@
                                     <td>{{ $clientOffer->offered_price}}</td>
                                     <td>{{ $clientOffer->product->seller->name}}</td>
                                     <td> <button class="btn btn-warning  m-1" data-toggle="modal"
-                                            data-target="#edit-client-offer-{{ $clientOffer->id }}">{{ __('lang.edit') }}</button><button
-                                            class="btn btn-danger  m-1" data-toggle="modal"
+                                            data-target="#edit-client-offer-{{ $clientOffer->id }}">{{ __('lang.edit') }}</button>
+                                        <button class="btn btn-danger  m-1" data-toggle="modal"
                                             data-target="#delete-client-offer-{{ $clientOffer->id }}">{{ __('lang.delete') }}</button>
                                     </td>
                                 </tr>
