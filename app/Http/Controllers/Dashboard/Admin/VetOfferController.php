@@ -15,7 +15,7 @@ class VetOfferController extends Controller
      */
     public function index()
     {
-        $vetOffers = VetOffer::all();
+        $vetOffers = VetOffer::with('veterinarian')->with('vetRequest')->get();
         $data['vetOffers'] = $vetOffers;
 
         return view('pages.admin.vet-offers.index')->with(compact('data'));

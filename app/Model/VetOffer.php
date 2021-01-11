@@ -2,12 +2,10 @@
 
 namespace App\Model;
 
+use App\Events\VetOfferCreated;
+use App\Events\VetOfferSaving;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-use App\Events\VetOfferSaving;
-use App\Events\VetOfferCreated;
-
 
 class VetOffer extends Model
 {
@@ -19,36 +17,36 @@ class VetOffer extends Model
         'price',
         'status',
         'payment_status',
-    ]; 
+    ];
 
     protected $dispatchesEvents = [
-        'saving' => VetOfferSaving::class, 
-        'created' => VetOfferCreated::class, 
+        'saving' => VetOfferSaving::class,
+        'created' => VetOfferCreated::class,
     ];
 
     public function veterinarian()
     {
-        return $this->belongsTo('App\User','vet_id')->withTrashed();;
+        return $this->belongsTo('App\User', 'vet_id')->withTrashed();
     }
 
     public function invoice()
     {
         return $this->hasOne('App\Model\Invoice');
     }
-    
+
     public function vetRequest()
     {
-        return $this->belongsTo('App\Model\VetRequest','vet_request_id');
+        return $this->belongsTo('App\Model\VetRequest', 'vet_request_id')->withTrashed();
     }
 
     public function vetRequestAccepted()
     {
-        return $this->hasOne('App\Model\VetRequest','accepted_vet_offer_id');
+        return $this->hasOne('App\Model\VetRequest', 'accepted_vet_offer_id');
     }
 
     public function rating()
     {
-        return $this->belongsTo('App\Model\Rating','rating_id');
+        return $this->belongsTo('App\Model\Rating', 'rating_id');
     }
 
     public function getPriceAttribute($value)
@@ -62,7 +60,7 @@ class VetOffer extends Model
     }
 
     public function statusTranslate($status)
-    {   
+    {
         $value = "";
         switch ($status) {
             case 'CANCELLED':
@@ -85,5 +83,4 @@ class VetOffer extends Model
         return $value;
     }
 
-    
 }
