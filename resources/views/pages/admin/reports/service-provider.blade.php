@@ -108,9 +108,10 @@
                                                         <button class="btn btn-danger  m-1"
                                                             onclick="pendingStatus('{{ $invoice->id }}')">{{ __('lang.pending') }}</button>
                                                         @endIf
-
+                                                        {{--
                                                         <input type="hidden" name="payment_status"
                                                             id="invoice_{{ $invoice->id}}" class="expert_id" value="">
+                                                        --}}
 
 
                                                         {{-- </form> --}}
