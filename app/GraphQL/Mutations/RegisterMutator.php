@@ -9,6 +9,7 @@ use App\User;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Str;
 use JWTAuth;
+use Kreait\Firebase\Factory;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class RegisterMutator
@@ -57,9 +58,18 @@ class RegisterMutator
         $user->save();
         $api_token = JWTAuth::fromUser($user);
 
+        $factory = (new Factory)->withServiceAccount(public_path() . "/mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json");
+        $factory = $factory->withDatabaseUri('https://mirsal-c162c.firebaseio.com/');
+        $authFirebase = $factory->createAuth();
+
+        $uid = "" . $user->id;
+        $customToken = $authFirebase->createCustomToken($uid);
+
         $token = new UserToken();
         $token->api_token = $api_token;
+        $token->firebase_token = $customToken;
         $token->user_id = $user->id;
+
         $token->save();
         if (isset($args['avatar'])) {
             $file = $args['avatar'];
@@ -87,6 +97,7 @@ class RegisterMutator
         return [
             'user' => $user,
             'token' => $api_token,
+            'fireBaseCustomToken' => $customToken,
         ];
     }
 }

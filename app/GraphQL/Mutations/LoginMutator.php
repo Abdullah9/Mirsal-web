@@ -39,17 +39,17 @@ class LoginMutator
 
         if ($logged) {
 
-            $token = new UserToken();
-            $token->user_id = $user->id;
-            $token->api_token = $logged;
-            $token->save();
-
             $factory = (new Factory)->withServiceAccount(public_path() . "/mirsal-c162c-firebase-adminsdk-65ru1-d51b1fe76d.json");
             $factory = $factory->withDatabaseUri('https://mirsal-c162c.firebaseio.com/');
             $authFirebase = $factory->createAuth();
 
             $uid = "" . $user->id;
             $customToken = $authFirebase->createCustomToken($uid);
+            $token = new UserToken();
+            $token->user_id = $user->id;
+            $token->firebase_token = $customToken;
+            $token->api_token = $logged;
+            $token->save();
 
             return [
                 'user' => $user,
