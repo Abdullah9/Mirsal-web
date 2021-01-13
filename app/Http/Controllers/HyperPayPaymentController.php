@@ -103,6 +103,21 @@ class HyperPayPaymentController extends Controller
         return view('pages.pay-invoice')->with(compact('data'));
 
     }
+    public function payInvoiceMada(Request $request)
+    {
+
+        $inv_id = $request->inv_id;
+        $invoice = Invoice::find($inv_id);
+        $data = array();
+        $response = HyperPayCopyAndPay::request(str_replace(',', "", $invoice->amount_paid), 'MADA');
+        $data['response'] = $response;
+        $data['inv_id'] = $inv_id;
+        $amount = $invoice->amount_paid;
+        $data['amount_paid'] = str_replace(',', "", $invoice->amount_paid);
+        // var_dump($data); exit;
+        return view('pages.pay-invoice-mada')->with(compact('data'));
+
+    }
 
     public function returnUrl(Request $request)
     {
@@ -169,21 +184,6 @@ class HyperPayPaymentController extends Controller
         return redirect()->away($url);
 
         // return view('pages.return-url')->with(compact('response'));
-    }
-    public function payInvoiceMada(Request $request)
-    {
-
-        $inv_id = $request->inv_id;
-        $invoice = Invoice::find($inv_id);
-        $data = array();
-        $response = HyperPayCopyAndPay::request(str_replace(',', "", $invoice->amount_paid), 'MADA');
-        $data['response'] = $response;
-        $data['inv_id'] = $inv_id;
-        $amount = $invoice->amount_paid;
-        $data['amount_paid'] = str_replace(',', "", $invoice->amount_paid);
-        // var_dump($data); exit;
-        return view('pages.pay-invoice-mada')->with(compact('data'));
-
     }
 
     public function returnUrlMada(Request $request)

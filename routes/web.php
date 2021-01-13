@@ -30,6 +30,7 @@ Route::middleware(['auth:web', 'locale'])->group(function () {
     Route::namespace ('Dashboard\Admin')->prefix('admins')->name('admins.')->group(function () {
         Route::resource('vet-requests', 'VetRequestController');
         Route::resource('vet-offers', 'VetOfferController');
+        Route::resource('advertisements', 'AdvertisementController');
         Route::resource('driver-requests', 'DriverRequestController');
         Route::resource('driver-offers', 'DriverOfferController');
         Route::resource('time-slots', 'TimeSlotController');
