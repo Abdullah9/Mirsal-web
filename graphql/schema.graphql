@@ -151,6 +151,9 @@ extend type Mutation @guard(checks: ["auth:api"]) {
 }
 
 type Query {
+    allAdvertisements(
+        display: Boolean @where(key: "display")
+    ): [Advertisement!]! @all(model: "App\\Model\\Advertisement")
     adminSetting: AdminSetting @first(model: "App\\Model\\AdminSetting")
     allProducts(
         seller_id: ID @eq
@@ -865,6 +868,14 @@ input UpdateLogNotification {
 }
 
 # Responses
+
+type Advertisement {
+    id: ID!
+    en: String!
+    ar: String!
+    image: String!
+    display: Boolean
+}
 type Rating {
     star_rating: String
     service_type: ServiceTypes
