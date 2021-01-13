@@ -99,7 +99,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
 
-                                        <img src="{{ asset('storage/'.$advertisement->image)}}" id="preview"
+                                        <img src="{{ asset('storage/ads/'.$advertisement->image)}}" id="preview"
                                             class="logo-icon img-centered">
                                     </div>
                                 </div>

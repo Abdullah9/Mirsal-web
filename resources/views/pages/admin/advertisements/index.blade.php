@@ -196,7 +196,7 @@
 
 
        var x = location.origin;
-      var proof = x +'/storage/'+image;
+      var proof = x +'/storage/ads/'+image;
       $('#proof-image').attr('src', proof);
        $(e.currentTarget).find('textarea[id="name"]').html(name);
        $(e.currentTarget).find('textarea[id="name_ar"]').html(name_ar);

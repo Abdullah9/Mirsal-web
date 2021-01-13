@@ -55,7 +55,7 @@ class AdvertisementController extends Controller
 
         if (!empty($request->image)) {
             $filename = '_ads' . time() . '.' . request()->image->getClientOriginalExtension();
-            $request->image->storeAs('', $filename, 'public');
+            $request->image->storeAs('ads', $filename, 'public');
             $advertisement->image = $filename;
 
         }
@@ -115,7 +115,7 @@ class AdvertisementController extends Controller
         // $advertisement->description = $request->description;
         if (!empty($request->image)) {
             $filename = '_ads' . time() . '.' . request()->image->getClientOriginalExtension();
-            $request->image->storeAs($filename);
+            $request->image->storeAs('ads', $filename, 'public');
             $advertisement->image = $filename;
 
         }
