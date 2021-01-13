@@ -11,7 +11,7 @@ return [
     | You may set `route` => false, to disable the default route
     | registration and take full control.
     |
-    */
+     */
 
     'route' => [
         /*
@@ -53,7 +53,7 @@ return [
     | relative to the app path. You should define your entire GraphQL
     | schema in this file (additional files may be imported).
     |
-    */
+     */
 
     'schema' => [
         'register' => base_path('graphql/schema.graphql'),
@@ -68,10 +68,10 @@ return [
     | This operation is very expensive, so it is highly recommended to enable
     | caching of the final schema to optimize performance of large schemas.
     |
-    */
+     */
 
     'cache' => [
-        'enable' => env('LIGHTHOUSE_CACHE_ENABLE', true),
+        'enable' => env('LIGHTHOUSE_CACHE_ENABLE', false),
         'key' => env('LIGHTHOUSE_CACHE_KEY', 'lighthouse-schema'),
         'ttl' => env('LIGHTHOUSE_CACHE_TTL', null),
     ],
@@ -85,7 +85,7 @@ return [
     | extend functionality of the schema. You may pass in either a string
     | or an array, they are tried in order and the first match is used.
     |
-    */
+     */
 
     'namespaces' => [
         'models' => ['App', 'App\\Models'],
@@ -106,7 +106,7 @@ return [
     | Control how Lighthouse handles security related query validation.
     | Read more at http://webonyx.github.io/graphql-php/security/
     |
-    */
+     */
 
     'security' => [
         'max_query_complexity' => \GraphQL\Validator\Rules\QueryComplexity::DISABLED,
@@ -123,7 +123,7 @@ return [
     | to fields that are paginated with the @paginate directive.
     | A setting of "null" means the count is unrestricted.
     |
-    */
+     */
 
     'paginate_max_count' => null,
 
@@ -137,7 +137,7 @@ return [
     |
     | DEPRECATED This setting will be removed in v5.
     |
-    */
+     */
 
     'pagination_amount_argument' => 'first',
 
@@ -151,7 +151,7 @@ return [
     |
     | DEPRECATED This setting will be removed in v5.
     |
-    */
+     */
 
     'orderBy' => 'field',
 
@@ -163,7 +163,7 @@ return [
     | Control the debug level as described in http://webonyx.github.io/graphql-php/error-handling/
     | Debugging is only applied if the global Laravel debug config is set to true.
     |
-    */
+     */
 
     'debug' => \GraphQL\Error\Debug::INCLUDE_DEBUG_MESSAGE | \GraphQL\Error\Debug::INCLUDE_TRACE,
 
@@ -176,7 +176,7 @@ return [
     | and handle them. You may use this to log, filter or format the errors.
     | The classes must implement \Nuwave\Lighthouse\Execution\ErrorHandler
     |
-    */
+     */
 
     'error_handlers' => [
         \Nuwave\Lighthouse\Execution\ExtensionErrorHandler::class,
@@ -190,7 +190,7 @@ return [
     | The name that is used for the global id field on the Node interface.
     | When creating a Relay compliant server, this must be named "id".
     |
-    */
+     */
 
     'global_id_field' => 'id',
 
@@ -202,7 +202,7 @@ return [
     | GraphQL query batching means sending multiple queries to the server in one request,
     | You may set this flag to either process or deny batched queries.
     |
-    */
+     */
 
     'batched_queries' => true,
 
@@ -214,7 +214,7 @@ return [
     | If set to true, mutations such as @create or @update will be
     | wrapped in a transaction to ensure atomicity.
     |
-    */
+     */
 
     'transactional_mutations' => true,
 
@@ -226,7 +226,7 @@ return [
     | If set to true, relations marked with directives like @hasMany or @belongsTo
     | will be optimized by combining the queries through the BatchLoader.
     |
-    */
+     */
 
     'batchload_relations' => true,
 
@@ -238,7 +238,7 @@ return [
     | Here you can define GraphQL subscription "broadcasters" and "storage" drivers
     | as well their required configuration options.
     |
-    */
+     */
 
     'subscriptions' => [
         /*
@@ -267,7 +267,7 @@ return [
             ],
             'pusher' => [
                 'driver' => 'pusher',
-                'routes' => \Nuwave\Lighthouse\Subscriptions\SubscriptionRouter::class.'@pusher',
+                'routes' => \Nuwave\Lighthouse\Subscriptions\SubscriptionRouter::class . '@pusher',
                 'connection' => 'pusher',
             ],
         ],
