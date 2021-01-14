@@ -400,4 +400,6 @@ return [
     'driver_offers' => "عروض التوصيل",
     'driver_offer' => "عرض التسليم",
     'advertisements' => 'الاعلانات',
+    'vet_offer_notes' => 'ملاحظات تقديم عرض البيطرين',
+    'driver_offers_notes' => 'ملاحظات تقديم عرض السائقين',
 ];

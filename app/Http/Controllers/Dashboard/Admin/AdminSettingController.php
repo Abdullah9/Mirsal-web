@@ -81,6 +81,12 @@ class AdminSettingController extends Controller
         // $company->tax_perc = $request->tax_perc;
         $company->admin_commission_perc = $request->admin_commission_perc;
         $company->first_payment_perc = $request->first_payment_perc;
+
+        $company->vet_offer_note = $request->vet_offer_note;
+        $company->driver_offer_note = $request->driver_offer_note;
+        $company->vet_offer_note_ar = $request->vet_offer_note_ar;
+        $company->driver_offer_note_ar = $request->driver_offer_note_ar;
+
         $company->terms_and_conditions = $request->terms_and_conditions;
         $company->terms_and_conditions_ar = $request->terms_and_conditions_ar;
         $company->save();

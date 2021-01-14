@@ -17,6 +17,10 @@ class CreateAdminSettingsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('name_ar');
+            $table->string('vet_offer_note')->nullable();
+            $table->string('vet_offer_note_ar')->nullable();
+            $table->string('driver_offer_note')->nullable();
+            $table->string('driver_offer_note_ar')->nullable();
             $table->integer("tax_perc")->default(0);
             $table->integer("admin_commission_perc")->default(0);
             $table->integer("first_payment_perc")->default(0);

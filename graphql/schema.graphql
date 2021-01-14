@@ -1120,6 +1120,12 @@ type UserFile {
 type AdminSetting {
     name: String
     name_ar: String
+
+    vet_offer_note: String
+    vet_offer_note_ar: String
+    driver_offer_note: String
+    driver_offer_note_ar: String
+
     tax_perc: Float
     admin_commission_perc: Float
     first_payment_perc: Float
