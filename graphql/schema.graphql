@@ -31,11 +31,10 @@ type Mutation {
 
     otpVerify(phone: String!, otp_code: String!): OtpVerifyResponse!
         @field(resolver: "OTPVerification@otpVerify")
-}
-extend type Mutation @middleware(checks: ["auth:api"]) {
     login(input: LoginInput @spread): UserResponse!
         @field(resolver: "LoginMutator")
 }
+
 extend type Mutation @guard(checks: ["auth:api"]) {
     firebaseCustomToken(user_id: Int!): String!
         @field(resolver: "FirebaseCustomToken")
