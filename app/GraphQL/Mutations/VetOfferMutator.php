@@ -59,16 +59,6 @@ class VetOfferMutator
 
                 $tax_percentage = $admin_setting->tax_perc / 100;
 
-                $payable_amount = $price - $admin_commission;
-
-                $amount_tax_price = $payable_amount * ($admin_setting->tax_perc / 100);
-                $commission_tax_price = $admin_commission * ($admin_setting->tax_perc / 100);
-
-                $payable_amount_with_tax = $payable_amount + $amount_tax_price;
-                $admin_commission_with_tax = $admin_commission + $commission_tax_price;
-
-                $tax_percentage = $admin_setting->tax_perc / 100;
-
                 $invoice = new Invoice;
                 $invoice->client_id = $vet_offer->vetRequest->client_id;
                 $invoice->vet_offer_id = $vet_offer_id;
@@ -79,15 +69,17 @@ class VetOfferMutator
 
                 $invoice->tax_price = $amount_tax_price + $commission_tax_price;
                 $invoice->tax_rate = $admin_setting->tax_perc;
-                $vet_offer->tax_price = $amount_tax_price;
-                $vet_offer->total = $payable_amount_with_tax + $admin_commission_with_tax;
 
                 $invoice->service_provider_id = $vet_offer->vet_id;
                 $invoice->provider_profit = $payable_amount_with_tax;
                 $invoice->admin_commission = $admin_commission_with_tax;
-
+                $invoice->amount_paid = $admin_commission_with_tax;
                 $invoice->save();
                 $invoice = Invoice::find($invoice->id);
+
+                $vet_offer->tax_price = $amount_tax_price;
+                $vet_offer->first_payment_price = $admin_commission_with_tax;
+                $vet_offer->total = $payable_amount_with_tax + $admin_commission_with_tax;
                 $vet_offer->save();
                 $vet_request->save();
                 return array(

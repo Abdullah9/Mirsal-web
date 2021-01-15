@@ -956,6 +956,8 @@ type VetOffer {
     status: VetOfferStatuses
     status_ar: String
     rating: Rating
+    total: String
+    first_payment_price: String
     created_at: String
     updated_at: String
 }
