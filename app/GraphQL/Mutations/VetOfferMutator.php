@@ -73,7 +73,7 @@ class VetOfferMutator
                 $invoice->service_provider_id = $vet_offer->vet_id;
                 $invoice->provider_profit = $payable_amount_with_tax;
                 $invoice->admin_commission = $admin_commission_with_tax;
-                $invoice->amount_paid = $admin_commission_with_tax;
+                // $invoice->amount_paid = $admin_commission_with_tax;
                 $invoice->save();
                 $invoice = Invoice::find($invoice->id);
 
