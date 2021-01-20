@@ -25,7 +25,8 @@ class VetRequest extends Model
         'vet_time_slot_id',
         'accepted_vet_offer_id',
         'image_uri',
-        'created_with_vet'
+        'created_with_vet',
+        'client_completed',
     ]; 
 
     protected $dispatchesEvents = [

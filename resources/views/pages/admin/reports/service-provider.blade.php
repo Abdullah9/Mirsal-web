@@ -81,25 +81,52 @@
                                             <thead class="thead-info">
                                                 <tr>
                                                     <th scope="col">#</th>
-
-                                                    <th scope="col">{{ __('lang.status') }}</th>
                                                     <th scope="col">{{ __('lang.provider_profit') }}</th>
                                                     <th scope="col">{{ __('lang.app_commission') }}</th>
+                                                    <th scope="col">{{ __('lang.service_completed') }}</th>
+                                                    <th scope="col">{{ __('lang.client_completed') }}</th>
+                                                    <th scope="col">{{ __('lang.status') }}</th>
                                                     <th scope="col">{{ __('lang.edit') }} {{ __('lang.status') }}
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($data['service_provider']->providerInvoices as $index =>
-                                                $invoice)
+                                                @foreach($data['service_provider']->providerInvoices as $index => $invoice)
                                                 <tr>
-                                                <tr>
-
-
                                                     <td>{{ $invoice->id }}</td>
                                                     <td>{{ $invoice->provider_profit}}</td>
                                                     <td>{{ $invoice->admin_commission}}</td>
-                                                    <td>{{ $invoice->payment_status}}</td>
+                                                    <?php 
+                                                        $service_provider_completed = __('lang.no');
+                                                        $client_completed = __('lang.no');
+                                                        $test_status = "No";
+                                                        if($invoice->payment_for == "DRIVER"){
+                                                            
+                                                            if($invoice->driverOffer->driverRequest->status == "COMPLETED"){
+                                                                $service_provider_completed = __('lang.yes');
+                                                            }
+
+                                                            if($invoice->driverOffer->driverRequest->client_completed == "YES"){
+                                                                $client_completed = __('lang.yes');
+                                                            }
+
+                                                        } else {
+
+                                                            if($invoice->vetOffer->vetRequest->status == "COMPLETED"){
+                                                                $service_provider_completed = __('lang.yes');
+                                                            }
+                                                                
+                                                                
+                                                            if($invoice->vetOffer->vetRequest->client_completed == "YES"){
+                                                                $client_completed = __('lang.yes');
+                                                            }
+                                                        }
+                                                    
+                                                    ?>
+                                                    <td>{{$service_provider_completed}}</td>
+                                                    <td>{{$client_completed}}</td>
+
+                                                    <td>{{ \App::getLocale() === "ar" ? $invoice->payment_status_ar : $invoice->payment_status }}</td>
                                                     </td>
                                                     <td>
                                                         <form id="update_invoice{{ $invoice->id}}"

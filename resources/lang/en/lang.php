@@ -403,4 +403,7 @@ return [
     'advertisements' => 'Advertisements',
     'vet_offer_notes' => 'veterinary Offer Notes ',
     'driver_offers_notes' => 'Driver Offers Notes',
+    'service_completed' => 'Service Provider Completed',
+    'client_completed' => 'Client Completed',
+    'paid_invoices' => 'Paid Invoices',
 ];

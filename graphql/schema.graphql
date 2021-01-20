@@ -639,6 +639,7 @@ input UpdateVetRequestInput {
     status: VetRequestStatuses
     preferred_date: Date
     preferred_time: String
+    client_completed: ClientCompleted
 }
 
 input CreateVetOfferInput {
@@ -725,6 +726,7 @@ input UpdateDriverRequestInput {
     preferred_date: Date
     preferred_time: String
     image_uri: String
+    client_completed: ClientCompleted
 }
 
 input CreateDriverOfferInput {
@@ -938,6 +940,8 @@ type VetRequest {
 
     created_with_vet: Int
     vetTimeSlot: VetTimeSlot @belongsto(relation: "vetTimeSlot")
+
+    client_completed: ClientCompleted
 }
 type UserTokens {
     id: ID
@@ -983,6 +987,8 @@ type DriverRequest {
     image: ImageFile @belongsTo(relation: "image")
     image_uri: String
     full_price: String
+
+    client_completed: ClientCompleted
 }
 
 type DriverOffer {
@@ -1280,4 +1286,9 @@ enum ServiceTypes {
     VETERINARY
     DELIVERY
     GENERAL_OFFER
+}
+
+enum ClientCompleted {
+    YES
+    NO
 }

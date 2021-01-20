@@ -26,6 +26,7 @@ class DriverRequest extends Model
         'image_id',
         'image_uri',
         'status',
+        'client_completed',
     ];
 
     protected $dispatchesEvents = [
