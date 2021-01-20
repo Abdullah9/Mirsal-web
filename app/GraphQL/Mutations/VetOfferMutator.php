@@ -44,11 +44,13 @@ class VetOfferMutator
                 $price = str_replace(',', "", $vet_offer->price);
                 //Amount calculation
                 // $invoice->amount_paid = $price;
-                if ($vet_request->type == "VISIT") {
-                    $admin_commission = $price * ($admin_setting->admin_commission_perc / 100);
-                } else {
-                    $admin_commission = $price * ($admin_setting->first_payment_perc / 100);
-                }
+                // if ($vet_request->type == "VISIT") {
+                    // $admin_commission = $price * ($admin_setting->admin_commission_perc / 100);
+                    // $admin_commission = $price * ($admin_setting->first_payment_perc / 100);
+                // }
+
+                $admin_commission = $price * ($admin_setting->admin_commission_perc / 100);
+                
                 $payable_amount = $price - $admin_commission;
 
                 $amount_tax_price = $payable_amount * ($admin_setting->tax_perc / 100);
@@ -64,9 +66,12 @@ class VetOfferMutator
                 $invoice->vet_offer_id = $vet_offer_id;
 
                 $invoice->payment_for = "VETERINARIAN";
-
-                $invoice->amount_paid = $payable_amount_with_tax + $admin_commission_with_tax;
-
+                if ($vet_request->type == "VISIT") {
+                    $invoice->amount_paid = $admin_commission_with_tax;
+                } else {
+                    $invoice->amount_paid = $payable_amount_with_tax + $admin_commission_with_tax;
+                }
+                
                 $invoice->tax_price = $amount_tax_price + $commission_tax_price;
                 $invoice->tax_rate = $admin_setting->tax_perc;
 
