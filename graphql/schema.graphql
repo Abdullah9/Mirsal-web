@@ -623,6 +623,8 @@ input CreateVetRequestWithVetInput {
     vet_time_slot_id: ID
     image_uri: String
     vet_id: ID
+    preferred_date: Date
+    preferred_time: String
 }
 
 input UpdateVetRequestInput {

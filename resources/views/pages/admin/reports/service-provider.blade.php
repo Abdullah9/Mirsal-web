@@ -72,7 +72,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header text-uppercase text-info">
-                                    {{ __('lang.paid_invoices') }}
+                                    {{ __('lang.invoices') }}
                                     <!-- <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#create-time-slot"><i aria-hidden="true" class="fa fa-plus"></i></button> -->
                                 </div>
                                 <div class="card-body">
