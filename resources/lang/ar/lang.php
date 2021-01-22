@@ -402,7 +402,6 @@ return [
     'advertisements' => 'الاعلانات',
     'vet_offer_notes' => 'ملاحظات تقديم عرض البيطرين',
     'driver_offers_notes' => 'ملاحظات تقديم عرض السائقين',
-    'service_completed' => 'Service Provider Completed',
-    'client_completed' => 'Client Completed',
-    'invoices' => 'Invoices',
+    'service_completed' => 'تأكيد إتمام الخدمة (مقدم الخدمة)',
+    'client_completed' => 'تأكيد إتمام الخدمة (العميل)',
 ];

@@ -167,8 +167,8 @@ extend type Query @guard(checks: ["auth:api"]) {
     me: User @auth
 
     getUsers(
-        role: Roles @eq
-        vet_status: VetStatuses @eq
+        role: Roles
+        vet_status: VetStatuses
         orderBy: _
             @orderBy(
                 columns: [
@@ -180,7 +180,10 @@ extend type Query @guard(checks: ["auth:api"]) {
                     "summary_rating"
                 ]
             )
-    ): [User!]! @paginate(model: "App\\User")
+    ): [User!]! @paginate(
+            builder: "App\\GraphQL\\CustomQueries\\UserQuery@getUsers"
+        )
+
     getUser(id: ID @eq): User! @find(model: "App\\User")
 
     currentConsultationsAsClient(
