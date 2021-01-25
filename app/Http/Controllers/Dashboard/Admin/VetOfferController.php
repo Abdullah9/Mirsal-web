@@ -86,6 +86,7 @@ class VetOfferController extends Controller
     {
         $vetOffer = VetOffer::find($id);
         $vetOffer->delete();
+        $vetOffer->invoice->delete();
 
         return redirect()->route('admins.vet-offers.index');
     }

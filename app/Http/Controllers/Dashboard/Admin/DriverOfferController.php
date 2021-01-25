@@ -86,6 +86,7 @@ class DriverOfferController extends Controller
     {
         $driverOffer = DriverOffer::find($id);
         $driverOffer->delete();
+        $driverOffer->invoice->delete();
 
         return redirect()->route('admins.driver-offers.index');
     }
