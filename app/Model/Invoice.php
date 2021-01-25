@@ -26,12 +26,12 @@ class Invoice extends Model
 
     public function vetOffer()
     {   
-        return $this->belongsTo('App\Model\VetOffer','vet_offer_id');
+        return $this->belongsTo('App\Model\VetOffer','vet_offer_id')->withTrashed();
     }
 
     public function driverOffer()
     {   
-        return $this->belongsTo('App\Model\DriverOffer','driver_offer_id');
+        return $this->belongsTo('App\Model\DriverOffer','driver_offer_id')->withTrashed();
     }
 
     public function getAmountPaidAttribute($value)
