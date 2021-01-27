@@ -18,7 +18,7 @@ class Visit
     {
         $client_id = $args['client_id'];
         $vetOfferQuery = VetOffer::query();
-        $vetRequestQuery = VetRequest::query();
+        $vetRequestQuery = VetRequest::query()->where('client_completed', "NO");
         $invoiceQuery = Invoice::query();
         if(isset($args['client_id'])){
             $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT")->where("status","ACCEPTED");
@@ -37,10 +37,10 @@ class Visit
     {
         $client_id = $args['client_id'];
         $vetOfferQuery = VetOffer::query();
-        $vetRequestQuery = VetRequest::query();
+        $vetRequestQuery = VetRequest::query()->where('client_completed', "YES");
         $invoiceQuery = Invoice::query();
         if(isset($args['client_id'])){
-            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT")->where("status","COMPLETED");
+            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT");
         }
         if(isset($args['created_with_vet'])){
             $vetRequestQuery = $vetRequestQuery->where("created_with_vet", $args['created_with_vet']);
@@ -65,7 +65,7 @@ class Visit
             return $invoices;
         $vetOfferIds = $invoices->pluck('vet_offer_id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","ACCEPTED");
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","ACCEPTED")->where('client_completed', "NO");
 
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
@@ -87,7 +87,7 @@ class Visit
             return $vetOffers;
         $vetOfferIds = $vetOffers->pluck('id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","COMPLETED");
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where('client_completed', "YES");
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
         }
