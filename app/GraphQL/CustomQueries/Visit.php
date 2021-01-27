@@ -65,7 +65,7 @@ class Visit
             return $invoices;
         $vetOfferIds = $invoices->pluck('vet_offer_id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","ACCEPTED")->where('client_completed', "NO");
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","ACCEPTED");
 
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
@@ -87,7 +87,7 @@ class Visit
             return $vetOffers;
         $vetOfferIds = $vetOffers->pluck('id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","COMPLETED")->where('client_completed', "YES");
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "VISIT")->where("status","COMPLETED");
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
         }
