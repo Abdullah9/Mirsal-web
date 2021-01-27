@@ -40,7 +40,7 @@ class Visit
         $vetRequestQuery = VetRequest::query()->where('client_completed', "YES");
         $invoiceQuery = Invoice::query();
         if(isset($args['client_id'])){
-            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT")->where("status","COMPLETED");
+            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT");
         }
         if(isset($args['created_with_vet'])){
             $vetRequestQuery = $vetRequestQuery->where("created_with_vet", $args['created_with_vet']);
