@@ -40,9 +40,9 @@ class DeliveryCustom
         $client_id = $args['client_id'];
         
         if(isset($args['type'])){
-            $driverRequests = DriverRequest::where("client_id", $client_id)->where("type", $args['type'])->where('client_completed', "YES");
+            $driverRequests = DriverRequest::where("client_id", $client_id)->where("type", $args['type'])->where("status","COMPLETED")->where('client_completed', "YES");
         } else {
-            $driverRequests = DriverRequest::where("client_id", $client_id)->where('client_completed', "YES");
+            $driverRequests = DriverRequest::where("client_id", $client_id)->where("status","COMPLETED")->where('client_completed', "YES");
         }
         
         if($driverRequests->get()->isEmpty())
@@ -90,9 +90,9 @@ class DeliveryCustom
         $driverOfferIds = $driverOffers->pluck('id');
 
         if(isset($args['type'])){
-            $driverRequests = DriverRequest::whereIn("accepted_driver_offer_id", $driverOfferIds)->where("type", $args['type'])->where('client_completed', "YES");
+            $driverRequests = DriverRequest::whereIn("accepted_driver_offer_id", $driverOfferIds)->where("type", $args['type'])->where("status","COMPLETED")->where('client_completed', "YES");
         } else {
-            $driverRequests = DriverRequest::whereIn("accepted_driver_offer_id", $driverOfferIds)->where('client_completed', "YES");
+            $driverRequests = DriverRequest::whereIn("accepted_driver_offer_id", $driverOfferIds)->where("status","COMPLETED")->where('client_completed', "YES");
         }
         
         if($driverRequests->get()->isEmpty())
