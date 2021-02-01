@@ -18,10 +18,10 @@ class Visit
     {
         $client_id = $args['client_id'];
         $vetOfferQuery = VetOffer::query();
-        $vetRequestQuery = VetRequest::query()->where('client_completed', "NO");
+        $vetRequestQuery = VetRequest::query()->where("type", "VISIT")->where('client_completed', "NO")->where("status","ACCEPTED")->orWhere("status","COMPLETED");
         $invoiceQuery = Invoice::query();
         if(isset($args['client_id'])){
-            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT")->where("status","ACCEPTED");
+            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id']);
         }
         if(isset($args['created_with_vet'])){
             $vetRequestQuery = $vetRequestQuery->where("created_with_vet", $args['created_with_vet']);
@@ -37,10 +37,10 @@ class Visit
     {
         $client_id = $args['client_id'];
         $vetOfferQuery = VetOffer::query();
-        $vetRequestQuery = VetRequest::query();
+        $vetRequestQuery = VetRequest::query()->where("type", "VISIT")->where('client_completed', "YES");
         $invoiceQuery = Invoice::query();
         if(isset($args['client_id'])){
-            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id'])->where("type", "VISIT")->where('client_completed', "YES");
+            $vetRequestQuery = $vetRequestQuery->where("client_id", $args['client_id']);
         }
         if(isset($args['created_with_vet'])){
             $vetRequestQuery = $vetRequestQuery->where("created_with_vet", $args['created_with_vet']);

@@ -17,12 +17,15 @@ class DeliveryCustom
     public function currentAsClient($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $client_id = $args['client_id'];
+        $driverRequests = DriverRequest::query()->where('client_completed', "NO")->where("status","ACCEPTED")->orWhere("status","COMPLETED");
+
+        if(isset($args['client_id'])){
+            $driverRequests = $driverRequests->where("client_id", $args['client_id']);
+        }
 
         if(isset($args['type'])){
-            $driverRequests = DriverRequest::where("client_id", $client_id)->where("type", $args['type'])->where("status","ACCEPTED")->where('client_completed', "NO");
-        } else {
-            $driverRequests = DriverRequest::where("client_id", $client_id)->where("status","ACCEPTED")->where('client_completed', "NO");
-        }
+            $driverRequests = $driverRequests->where("type", $args['type']);
+        } 
 
         // $driverRequests = DriverRequest::where("client_id", $client_id)->where("type", $args['type'])->where("status","ACCEPTED");
         if($driverRequests->get()->isEmpty())
@@ -38,12 +41,16 @@ class DeliveryCustom
     public function previousAsClient($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $client_id = $args['client_id'];
-        
-        if(isset($args['type'])){
-            $driverRequests = DriverRequest::where("client_id", $client_id)->where("type", $args['type'])->where('client_completed', "YES");
-        } else {
-            $driverRequests = DriverRequest::where("client_id", $client_id)->where('client_completed', "YES");
+
+        $driverRequests = DriverRequest::query()->where('client_completed', "YES");
+
+        if(isset($args['client_id'])){
+            $driverRequests = $driverRequests->where("client_id", $args['client_id']);
         }
+
+        if(isset($args['type'])){
+            $driverRequests = $driverRequests->where("type", $args['type']);
+        } 
         
         if($driverRequests->get()->isEmpty())
             return $driverRequests;

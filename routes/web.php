@@ -38,6 +38,7 @@ Route::middleware(['auth:web', 'locale'])->group(function () {
         Route::resource('sizes', 'SizeController');
         Route::resource('durations', 'DurationController');
         Route::resource('cars', 'CarController');
+        Route::resource('suggestions', 'SuggestionController');
         Route::resource('invoices', 'InvoiceController');
         Route::resource('products', 'ProductController');
         Route::put('products/accept/{product}', 'ProductController@accept')->name('products.accept');

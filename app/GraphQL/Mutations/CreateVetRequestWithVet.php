@@ -20,7 +20,7 @@ class CreateVetRequestWithVet
     
     public function createWithVet($root, array $args)
     {
-        // echo json_encode($arr); exit;
+        // echo json_encode($args); exit;
         if(isset($args['address'])){
             $address = Address::create($args['address']['create']);
             $args['address_id'] = $address->id;
@@ -29,6 +29,7 @@ class CreateVetRequestWithVet
         $args['created_with_vet'] = 1;
         $vet_request = VetRequest::create($args);
         $vet = User::find($args['vet_id']);
+
 
         $price = "0";
         if($args["type"] == "CONSULTATION"){

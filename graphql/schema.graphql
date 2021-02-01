@@ -1163,6 +1163,8 @@ type VetTimeSlot {
 
 type Suggestion {
     id: ID
+    user_id: ID
+    user: User
     name: String
     phone: String
     message: String

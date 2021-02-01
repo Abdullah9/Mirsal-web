@@ -18,7 +18,7 @@ class Consultation
     {
         $client_id = $args['client_id'];
 
-        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where("status","ACCEPTED");
+        $vetRequests = VetRequest::where("client_id", $client_id)->where('client_completed', "NO")->where("type", "CONSULTATION")->where("status","ACCEPTED")->orWhere("status","COMPLETED");
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
         }
@@ -36,7 +36,7 @@ class Consultation
     {
         $client_id = $args['client_id'];
 
-        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where("status","COMPLETED");
+        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where('client_completed', "YES");
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
         }

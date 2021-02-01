@@ -404,4 +404,6 @@ return [
     'driver_offers_notes' => 'ملاحظات تقديم عرض السائقين',
     'service_completed' => 'تأكيد إتمام الخدمة (مقدم الخدمة)',
     'client_completed' => 'تأكيد إتمام الخدمة (العميل)',
+    'message' => 'الرسالة',
+    'suggestions' => 'الشكاوى والاقتراحات'
 ];
