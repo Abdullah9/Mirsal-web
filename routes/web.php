@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Model\VetOffer;
+use App\Model\DriverOffer;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +60,26 @@ Route::middleware(['auth:web', 'locale'])->group(function () {
 
 });
 
+Route::get('test', function(){
+    
+    $vetOffers = VetOffer::query()
+    ->where("status","ACCEPTED");
+    $vetOffers = $vetOffers->get();
+
+    foreach ($vetOffers as $vetOffer) {
+       $created_at =  $vetOffer->vetRequest->created_at;
+       $vetOffer->booking_date = $created_at ;
+       $vetOffer->save();
+    }
+
+    $driverOffers = DriverOffer::query()
+    ->where("status","ACCEPTED");
+    $driverOffers = $driverOffers->get();
+
+    foreach ($driverOffers as $driverOffer) {
+       $created_at =  $driverOffer->driverRequest->created_at;
+       $driverOffer->booking_date = $created_at ;
+       $driverOffer->save();
+    }
+
+});

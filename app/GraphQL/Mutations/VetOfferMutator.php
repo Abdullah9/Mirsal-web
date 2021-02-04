@@ -85,6 +85,7 @@ class VetOfferMutator
                 $vet_offer->tax_price = $amount_tax_price;
                 $vet_offer->first_payment_price = $admin_commission_with_tax;
                 $vet_offer->total = $payable_amount_with_tax + $admin_commission_with_tax;
+                $vet_offer->booking_date = $vet_offer->vetRequest->created_at;
                 $vet_offer->save();
                 $vet_request->save();
                 return array(

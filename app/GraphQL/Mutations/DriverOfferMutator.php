@@ -56,6 +56,7 @@ class DriverOfferMutator
 
                 $driver_offer->tax_price = $tax_price;
                 $driver_offer->first_payment_price = $admin_commission_with_tax;
+                $driver_offer->booking_date = $driver_offer->driverRequest->created_at;
                 $driver_offer->save();
                 $driver_request->save();
                 return array(

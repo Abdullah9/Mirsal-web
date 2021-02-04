@@ -189,7 +189,7 @@ extend type Query @guard(checks: ["auth:api"]) {
     currentConsultationsAsClient(
         client_id: ID
         created_with_vet: Int
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [VetOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsClient"
@@ -197,7 +197,7 @@ extend type Query @guard(checks: ["auth:api"]) {
     previousConsultationsAsClient(
         client_id: ID
         created_with_vet: Int
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [VetOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsClient"
@@ -205,7 +205,7 @@ extend type Query @guard(checks: ["auth:api"]) {
     currentConsultationsAsVet(
         vet_id: ID
         created_with_vet: Int
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [VetOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\Consultation@currentAsVet"
@@ -213,7 +213,7 @@ extend type Query @guard(checks: ["auth:api"]) {
     previousConsultationsAsVet(
         vet_id: ID
         created_with_vet: Int
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [VetOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\Consultation@previousAsVet"
@@ -222,13 +222,13 @@ extend type Query @guard(checks: ["auth:api"]) {
     currentVisitsAsClient(
         client_id: ID
         created_with_vet: Int
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [VetOffer!]
         @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsClient")
     previousVisitsAsClient(
         client_id: ID
         created_with_vet: Int
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [VetOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsClient"
@@ -236,20 +236,20 @@ extend type Query @guard(checks: ["auth:api"]) {
     currentVisitsAsVet(
         vet_id: ID
         created_with_vet: Int
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [VetOffer!]
         @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@currentAsVet")
     previousVisitsAsVet(
         vet_id: ID
         created_with_vet: Int
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [VetOffer!]
         @paginate(builder: "App\\GraphQL\\CustomQueries\\Visit@previousAsVet")
 
     currentDeliveryAsClient(
         client_id: ID
         type: DriverRequestTypes
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [DriverOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsClient"
@@ -257,7 +257,7 @@ extend type Query @guard(checks: ["auth:api"]) {
     previousDeliveryAsClient(
         client_id: ID
         type: DriverRequestTypes
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [DriverOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsClient"
@@ -265,7 +265,7 @@ extend type Query @guard(checks: ["auth:api"]) {
     currentDeliveryAsDriver(
         driver_id: ID
         type: DriverRequestTypes
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [DriverOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@currentAsDriver"
@@ -273,7 +273,7 @@ extend type Query @guard(checks: ["auth:api"]) {
     previousDeliveryAsDriver(
         driver_id: ID
         type: DriverRequestTypes
-        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
+        orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id","booking_date"])
     ): [DriverOffer!]
         @paginate(
             builder: "App\\GraphQL\\CustomQueries\\DeliveryCustom@previousAsDriver"
@@ -969,6 +969,7 @@ type VetOffer {
     first_payment_price: String
     created_at: String
     updated_at: String
+    booking_date: String
 }
 
 type DriverRequest {
