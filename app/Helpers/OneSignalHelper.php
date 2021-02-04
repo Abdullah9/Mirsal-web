@@ -13,7 +13,10 @@ class OneSignalHelper
         // );
 
         $content = self::selectMessage($type);
-
+        
+        //switch force to send AR
+        $contents['en'] = $content['ar'];
+        
         $title = array(
             "en" => "Mirsal",
             "ar" => "Mirsal"
@@ -23,7 +26,7 @@ class OneSignalHelper
             'app_id' => "467061a2-9264-4738-b764-5490c488502b",
             'data'=> $pushData,
             'headings'=> $title,
-            'contents' => $content,
+            'contents' => $contents,
             "android_group"=>$group,
             'filters' => $filter
         );

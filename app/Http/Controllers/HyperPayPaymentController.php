@@ -89,12 +89,16 @@ class HyperPayPaymentController extends Controller
     }
 
     public function payInvoice(Request $request)
-    {
-
+    {   
         $inv_id = $request->inv_id;
         $invoice = Invoice::find($inv_id);
+
+        $arr = array(
+            "merchantTransactionId" => $inv_id
+        );
+
         $data = array();
-        $response = HyperPayCopyAndPay::request(str_replace(',', "", $invoice->amount_paid), 'VISA/MASTERCARD');
+        $response = HyperPayCopyAndPay::request(str_replace(',', "", $invoice->amount_paid), 'VISA/MASTERCARD', $arr);
         $data['response'] = $response;
         $data['inv_id'] = $inv_id;
         $amount = $invoice->amount_paid;
@@ -121,13 +125,13 @@ class HyperPayPaymentController extends Controller
 
     public function returnUrl(Request $request)
     {
+
         $inv_id = $request->inv_id;
         $invoice = Invoice::find($inv_id);
         $url = "mirsal://payment?invoiceId=" . $inv_id;
         $response = \App\Helpers\HyperPayCopyAndPay::paymentStatus($request->resourcePath, 'VISA/MASTERCARD');
 
         // var_dump($response); exit;
-
         $result_code = $response['result']['code'];
         if ($result_code == "000.000.000" || $result_code == "000.100.110" || $result_code == "000.000.100") {
             $arr_result = array(

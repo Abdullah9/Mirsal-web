@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class HyperPayCopyAndPay
 {
-    public static function request($price, $brand)
+    public static function request($price, $brand, $arr)
     {
         $entityId = "8ac7a4ca74490e2601744972410e0145";
         $mada = "8ac7a4ca74490e2601744972a9c30149";
@@ -15,9 +15,20 @@ class HyperPayCopyAndPay
 
         $url = "https://test.oppwa.com/v1/checkouts";
         $data = "entityId=" . $entityId .
+            "&currency=SAR".
             "&amount=" . $price .
-            "&currency=SAR" .
-            "&paymentType=DB";
+            
+            "&paymentType=DB".
+            "&merchantTransactionId=".$arr['merchantTransactionId']
+            // "&customer.email=bap.greenery@gmail.com".
+            // "&billing.street1=test street".
+            // "&billing.city=Davao".
+            // "&billing.state=Davao Del Sur".
+            // "&billing.country=SA".
+            // "&billing.postcode=11564".
+            // "&customer.givenName= test name".
+            // "&customer.surname= test surname"
+            ;
 
         // var_dump($data); exit;
         $ch = curl_init();

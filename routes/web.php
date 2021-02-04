@@ -58,6 +58,3 @@ Route::middleware(['auth:web', 'locale'])->group(function () {
 
 });
 
-// Route::get('test', function(){
-
-// });

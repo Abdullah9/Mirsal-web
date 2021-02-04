@@ -18,7 +18,18 @@ class Consultation
     {
         $client_id = $args['client_id'];
 
-        $vetRequests = VetRequest::where("client_id", $client_id)->where('client_completed', "NO")->where("type", "CONSULTATION")->where("status","ACCEPTED")->orWhere("status","COMPLETED");
+        $vetRequests = VetRequest::where("client_id", $client_id)
+        ->where("type", "CONSULTATION")
+        ->where( function ($query){
+            $query->where("status","ACCEPTED")
+            ->where('client_completed', "NO")
+
+            ->orWhere("status","COMPLETED")
+            ->where('client_completed', "NO")
+
+            ->orWhere("status","ACCEPTED")
+            ->Where('client_completed', "YES");
+        });
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
         }
@@ -36,7 +47,7 @@ class Consultation
     {
         $client_id = $args['client_id'];
 
-        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where('client_completed', "YES");
+        $vetRequests = VetRequest::where("client_id", $client_id)->where("type", "CONSULTATION")->where('client_completed', "YES")->where("status","COMPLETED");
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
         }
@@ -62,7 +73,21 @@ class Consultation
             return $invoices;
         $vetOfferIds = $invoices->pluck('vet_offer_id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "CONSULTATION")->where("status","ACCEPTED");
+        $vetRequests = VetRequest::
+        where("type", "CONSULTATION")
+        ->where( function ($query){
+            $query->where("status","ACCEPTED")
+            ->where('client_completed', "NO")
+
+            ->orWhere("status","COMPLETED")
+            ->where('client_completed', "NO")
+
+            ->orWhere("status","ACCEPTED")
+            ->where('client_completed', "YES");
+        });
+        
+        // echo $vetRequests->toSql(); exit;
+
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
         }
@@ -77,12 +102,12 @@ class Consultation
     public function previousAsVet($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $vet_id = $args['vet_id'];
-        $vetOffers = VetOffer::where("vet_id", $vet_id)->whereIn('status', ["ACCEPTED", "COMPLETED"]);
+        $vetOffers = VetOffer::where("vet_id", $vet_id)->where('status', "ACCEPTED");
         if($vetOffers->get()->isEmpty())
             return $vetOffers;
         $vetOfferIds = $vetOffers->pluck('id');
 
-        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "CONSULTATION")->where("status","COMPLETED");
+        $vetRequests = VetRequest::whereIn("accepted_vet_offer_id", $vetOfferIds)->where("type", "CONSULTATION")->where("status","COMPLETED")->where('client_completed', "YES");
         if(isset($args['created_with_vet'])){
             $vetRequests = $vetRequests->where("created_with_vet", $args['created_with_vet']);
         }
