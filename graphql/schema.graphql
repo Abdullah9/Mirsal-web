@@ -161,10 +161,6 @@ type Query {
         display: Int @eq
         orderBy: _ @orderBy(columns: ["created_at", "updated_at", "id"])
     ): [Advertisement!]! @paginate(model: "App\\Model\\Advertisement")
-}
-
-extend type Query @guard(checks: ["auth:api"]) {
-    me: User @auth
 
     getUsers(
         role: Roles
@@ -185,6 +181,12 @@ extend type Query @guard(checks: ["auth:api"]) {
         )
 
     getUser(id: ID @eq): User! @find(model: "App\\User")
+}
+
+extend type Query @guard(checks: ["auth:api"]) {
+    me: User @auth
+
+    
 
     currentConsultationsAsClient(
         client_id: ID
