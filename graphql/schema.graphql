@@ -181,6 +181,8 @@ type Query {
         )
 
     getUser(id: ID @eq): User! @find(model: "App\\User")
+
+    cars: [Car!]! @paginate(model: "App\\Model\\Car")
 }
 
 extend type Query @guard(checks: ["auth:api"]) {
@@ -458,7 +460,7 @@ extend type Query @guard(checks: ["auth:api"]) {
     # timeSlots(taken: Int, orderBy: _ @orderBy(columns: ["created_at", "updated_at","id"]) ): [TimeSlot!] @paginate(model: "App\\Model\\TimeSlot")
 
     durations: [Duration!]! @paginate(model: "App\\Model\\Duration")
-    cars: [Car!]! @paginate(model: "App\\Model\\Car")
+    
 
     ratings(
         id: ID @eq
