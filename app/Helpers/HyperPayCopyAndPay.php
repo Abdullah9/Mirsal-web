@@ -21,8 +21,13 @@ class HyperPayCopyAndPay
             "&merchantTransactionId=".$arr['merchantTransactionId'].
             "&customer.email=".$arr['customerEmail'].
             "&billing.country=SA".
+            "&billing.street1=Shaikh Hasan Ibn Hussain Ibn Ali Rd".
+            "&billing.city=Riyadh".
+            "&billing.state=Riyadh".
+            "&billing.postcode=13246".
             "&customer.givenName=".$arr['customerName'].
             "&customer.surname=".$arr['customerName']
+            
             ;
 
         // var_dump($data); exit;
