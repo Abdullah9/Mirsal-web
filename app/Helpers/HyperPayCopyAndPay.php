@@ -17,17 +17,12 @@ class HyperPayCopyAndPay
         $data = "entityId=" . $entityId .
             "&currency=SAR".
             "&amount=" . $price .
-            
             "&paymentType=DB".
-            "&merchantTransactionId=".$arr['merchantTransactionId']
-            // "&customer.email=bap.greenery@gmail.com".
-            // "&billing.street1=test street".
-            // "&billing.city=Davao".
-            // "&billing.state=Davao Del Sur".
-            // "&billing.country=SA".
-            // "&billing.postcode=11564".
-            // "&customer.givenName= test name".
-            // "&customer.surname= test surname"
+            "&merchantTransactionId=".$arr['merchantTransactionId'].
+            "&customer.email=".$arr['customerEmail'].
+            "&billing.country=SA".
+            "&customer.givenName=".$arr['customerName'].
+            "&customer.surname=".$arr['customerName']
             ;
 
         // var_dump($data); exit;

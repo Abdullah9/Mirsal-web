@@ -94,7 +94,9 @@ class HyperPayPaymentController extends Controller
         $invoice = Invoice::find($inv_id);
 
         $arr = array(
-            "merchantTransactionId" => $inv_id
+            "merchantTransactionId" => $inv_id,
+            "customerEmail" => $invoice->client->email,
+            "customerName" => $invoice->client->name,
         );
 
         $data = array();
@@ -113,8 +115,11 @@ class HyperPayPaymentController extends Controller
         $inv_id = $request->inv_id;
         $invoice = Invoice::find($inv_id);
 
+       
         $arr = array(
-            "merchantTransactionId" => $inv_id
+            "merchantTransactionId" => $inv_id,
+            "customerEmail" => $invoice->client->email,
+            "customerName" => $invoice->client->name,
         );
 
         $data = array();
