@@ -33,6 +33,18 @@ class VetRequest extends Model
         'saving' => VetRequestSaving::class, 
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($query) {
+            foreach($query->vetOffers as $vetOffer) {
+                $vetOffer->delete();
+            }
+        });
+        
+    }
+
     public function client()
     {
         return $this->belongsTo('App\User')->withTrashed();

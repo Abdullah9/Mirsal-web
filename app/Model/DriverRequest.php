@@ -33,6 +33,18 @@ class DriverRequest extends Model
         'saving' => DriverRequestSaving::class,
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($query) {
+            foreach($query->driverOffers as $driverOffer) {
+                $driverOffer->delete();
+            }
+        });
+        
+    }
+
     public function client()
     {
         return $this->belongsTo('App\User')->withTrashed();

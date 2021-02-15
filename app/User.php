@@ -32,6 +32,25 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($user) {
+            foreach($user->VetRequests as $VetRequest) {
+                $VetRequest->delete();
+            }
+            foreach($user->DriverRequests as $DriverRequest) {
+                $DriverRequest->delete();
+            }
+            foreach($user->invoices as $invoice) {
+                $invoice->delete();
+            }
+            
+        });
+        
+    }
+
     public function devices()
     {
         return $this->hasMany('App\Model\Device');
@@ -106,6 +125,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->providerInvoices()->where('payment_status', 'PAID');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany('App\Model\Invoice', 'client_id');
+    }
+
     // REJECTED مرفوضة
     public function vetStatusTranslate($vet_status)
     {
@@ -127,12 +151,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function VetRequests()
     {
-        return $this->hasMany('App\Model\VetRequest');
+        return $this->hasMany('App\Model\VetRequest','client_id');
     }
 
     public function DriverRequests()
     {
-        return $this->hasMany('App\Model\DriverRequest');
+        return $this->hasMany('App\Model\DriverRequest','client_id');
     }
     public function UserTokens()
     {
