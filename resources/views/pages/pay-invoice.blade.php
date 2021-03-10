@@ -10,6 +10,6 @@
 
 @push('head')
 
-<script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId={{$data['response']['id']}}"></script>
+<script src="https://oppwa.com/v1/paymentWidgets.js?checkoutId={{$data['response']['id']}}"></script>
 
 @endpush
